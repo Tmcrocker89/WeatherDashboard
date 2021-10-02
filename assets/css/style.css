@@ -40,3 +40,26 @@ body{
       flex-direction: column;
       min-width: 66.5%!important;
   }
+
+  #searchBox{
+    margin: auto!important;
+    width: 95% !important;
+  }
+
+  #searchText{
+    margin: 10px;
+  }
+
+  #searchButton{
+    margin: 10px!important;
+    padding: 8px;
+    font-size: 20px;
+    color: white;
+    background-color: blue;
+    width: 95% !important;
+
+  }
+
+  #current{
+    border: 2px black solid;
+  }
