@@ -23,15 +23,17 @@ body{
   #current{
     display: grid;
     flex-direction: column;
-    flex: 0 1 40vh;
+    flex: 0 1 20vh;
     flex-wrap: wrap;
 
   }
   #future{
     display: grid;
-    flex-direction: column;
-    flex: 0 1 40vh;
+    flex-direction: row;
+    flex: 0 1 20vh;
     flex-wrap: wrap;
+    padding: 0!important;
+    grid-auto-flow: column;
 
   }
 
@@ -50,7 +52,7 @@ body{
     margin: 10px;
   }
 
-  #searchButton{
+  #searchButton, .pastSearches{
     margin: 10px!important;
     padding: 8px;
     font-size: 20px;
@@ -62,4 +64,13 @@ body{
 
   #current{
     border: 2px black solid;
+  }
+
+  .futureWeather{
+    display: flex;
+    flex-direction: column;
+    background: blue;
+    margin: 10px;
+    align-items: center;
+    color: white;
   }

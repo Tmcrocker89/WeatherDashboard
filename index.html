@@ -30,15 +30,20 @@
     </header>
     <div class="d-flex" id="container">
         <div class="col-4 vh-80" id="search" >
-          <h1 id="searchText">Search for a City:</h1>
-          <input type="text" class="form-control input-group input-group-lg" id="searchBox">
-          <input type="button" value="Search" id='searchButton' class="">
+          <form id="searchForm">
+            <h1 id="searchText">Search for a City:</h1>
+            <input type="text" class="form-control input-group input-group-lg" id="searchBox">
+            <input type="button" value="Search" id='searchButton' class="">
+            <div id='pastSearches'></div>
+          </form>
         </div>
         <aside class="h-100">
             <div class="col-12 min-vh-50" id="current">
+              <h1></h1>
+            </div>
+            <div class="col-12 min-vh-50" id="future" >
 
             </div>
-            <div class="col-12 min-vh-50" id="future" >Future</div>
         </aside>
     </div>
 
