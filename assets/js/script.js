@@ -7,7 +7,6 @@ let searches = $("#pastSearches");
 let searchForm = $("#searchForm");
 let searchBox = $('#searchBox');
 let searchButton = $('#searchButton');
-//let url = 'https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude={part}&appid={API key}';
 let url1;
 let url2;
 let weather = {};
@@ -18,7 +17,6 @@ let p = $("<p>")
 let pulledSearches = JSON.parse(localStorage.getItem("cities"));
 let pastSearches = (pulledSearches !== null) ? pulledSearches : {searches:[]};
 
-//let length = Object.keys(weather['current]).length;
 
 
 function getWeather(url)
@@ -31,8 +29,7 @@ function getWeather(url)
         .then(function(data){
             lat = data.coord.lat;
             lon = data.coord.lon;
-            cityName = data.name
-            console.log(data)
+            cityName = data.name;
             url2 = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=hourly,minutely&units=imperial&appid=9abc24e2bd82a06cffa0711c49b6f93b`;
             
         })
@@ -46,7 +43,6 @@ function getWeather(url)
                 .then(function(responce)
                 {
                     weather = responce;
-                    console.log(responce);
                     createHTML()
                 })
             })
@@ -97,7 +93,6 @@ function renderSearches()
         
         searches.html('');
         days += '<button type="button" class="pastSearches">'+ pastSearches.searches[i] + '</button>'
-        console.log(days)
         searches.html(days)
 
     }
@@ -121,11 +116,8 @@ $( document ).on("click", ".pastSearches", function(event)
 function search()
 {
     city = searchBox.val();
-    console.log(city)
     url1 = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=b08eb93cc1596355f2ef187a75896064`;
-    console.log(url1)
     getWeather(url1);
-    console.log(city)
     if(!pastSearches.searches.includes(city) && city.length > 0)
     {
     pastSearches.searches.push(city)
