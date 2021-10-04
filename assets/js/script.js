@@ -12,8 +12,6 @@ let url2;
 let weather = {};
 let current = $("#current");
 let future = $("#future");
-let h1 = $("<h1>")
-let p = $("<p>")
 let pulledSearches = JSON.parse(localStorage.getItem("cities"));
 let pastSearches = (pulledSearches !== null) ? pulledSearches : {searches:[]};
 
@@ -43,6 +41,7 @@ function getWeather(url)
                 .then(function(responce)
                 {
                     weather = responce;
+                    console.log(weather)
                     createHTML()
                 })
             })
@@ -53,7 +52,8 @@ function createHTML()
 {
     current.html('');
     future.html('');
-    let date = h1;
+    current.css("border","2px black solid")
+    let date = $("<h1>");
     let p1 = $("<p>");
     let p2 = $("<p>");
     let p3 = $("<p>");
@@ -63,23 +63,25 @@ function createHTML()
     p2.text(`Wind:${weather.current.wind_speed} MPH`)
     p3.text(`Humidity:${weather.current.humidity}%`)
     p4.text(`UV Index:${weather.current.uvi}`)
+    if(weather.current.uvi >= 6)
+    {
+        p4.css({'background-color':'red', 'width': '120px'})
+    }
+    else if(weather.current.uvi >= 3)
+    {
+        p4.css({'background-color':'yellow', 'width': '120px'})
+    }
+    else
+    {
+        p4.css({'background-color':'green', 'width': '120px'})
+    }
     current.append(date,p1,p2,p3,p4)
-    let div0 = $("<div>");
-    let div1 = $("<div>");
-    let div2 = $("<div>");
-    let div3 = $("<div>");
-    let div4 = $("<div>");
-    div0.addClass("futureWeather")
-    div1.addClass("futureWeather")
-    div2.addClass("futureWeather")
-    div3.addClass("futureWeather")
-    div4.addClass("futureWeather")
-    div0.html(`<p>${moment(weather.daily[1].dt, 'X').format("M/D/YYYY")}</p><img src=http://openweathermap.org/img/w/${weather.daily[1].weather[0].icon}.png><p>Temp:${weather.daily[0].temp.max}</p><p>Wind:${weather.daily[1].wind_speed}</p><p>Humidity:${weather.daily[1].humidity}</p>`)
-    div1.html(`<p>${moment(weather.daily[2].dt, 'X').format("M/D/YYYY")}</p><img src=http://openweathermap.org/img/w/${weather.daily[2].weather[0].icon}.png><p>Temp:${weather.daily[1].temp.max}</p><p>Wind:${weather.daily[2].wind_speed}</p><p>Humidity:${weather.daily[2].humidity}</p>`)
-    div2.html(`<p>${moment(weather.daily[3].dt, 'X').format("M/D/YYYY")}</p><img src=http://openweathermap.org/img/w/${weather.daily[3].weather[0].icon}.png><p>Temp:${weather.daily[2].temp.max}</p><p>Wind:${weather.daily[3].wind_speed}</p><p>Humidity:${weather.daily[3].humidity}</p>`)
-    div3.html(`<p>${moment(weather.daily[4].dt, 'X').format("M/D/YYYY")}</p><img src=http://openweathermap.org/img/w/${weather.daily[4].weather[0].icon}.png><p>Temp:${weather.daily[3].temp.max}</p><p>Wind:${weather.daily[4].wind_speed}</p><p>Humidity:${weather.daily[4].humidity}</p>`)
-    div4.html(`<p>${moment(weather.daily[5].dt, 'X').format("M/D/YYYY")}</p><img src=http://openweathermap.org/img/w/${weather.daily[5].weather[0].icon}.png><p>Temp:${weather.daily[4].temp.max}</p><p>Wind:${weather.daily[5].wind_speed}</p><p>Humidity:${weather.daily[5].humidity}</p>`)
-    future.append(div0,div1,div2,div3,div4);
+    let content = '';
+    for(let i = 1; i < 6; i++)
+    {
+        content += `<div class="futureWeather" ><p>${moment(weather.daily[i].dt, 'X').format("M/D/YYYY")}</p><img src=http://openweathermap.org/img/w/${weather.daily[i].weather[0].icon}.png><p>Temp:${weather.daily[i].temp.max}</p><p>Wind:${weather.daily[i].wind_speed}</p><p>Humidity:${weather.daily[i].humidity}</p></div>`
+        future.html(content);
+    }
     renderSearches()
 
     
