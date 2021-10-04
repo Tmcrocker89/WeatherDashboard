@@ -73,3 +73,11 @@ body{
     align-items: center;
     color: white;
   }
+
+  #clearSearch{
+    position: relative;
+    left: -35%;
+    font-size: 20px;
+    color: blue;
+    background-color: white;
+  }

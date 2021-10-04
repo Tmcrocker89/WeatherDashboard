@@ -7,6 +7,7 @@ let searches = $("#pastSearches");
 let searchForm = $("#searchForm");
 let searchBox = $('#searchBox');
 let searchButton = $('#searchButton');
+let clearButton = $('#clearSearch')
 let url1;
 let url2;
 let weather = {};
@@ -115,6 +116,11 @@ $( document ).on("click", ".pastSearches", function(event)
     search()
 })
 
+clearButton.click(function()
+    {
+        clearSearch()
+    });
+
 function search()
 {
     city = searchBox.val();
@@ -126,6 +132,12 @@ function search()
     }
     localStorage.setItem('cities', JSON.stringify(pastSearches))
     searchBox.val('');
+}
+
+function clearSearch()
+{
+    localStorage.setItem('cities', JSON.stringify(''))
+    location.reload();
 }
     
 $(document).ready(function()
