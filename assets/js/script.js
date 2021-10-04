@@ -136,7 +136,7 @@ function search()
 
 function clearSearch()
 {
-    localStorage.setItem('cities', JSON.stringify(''))
+    localStorage.setItem('cities', JSON.stringify({searches:[]}))
     location.reload();
 }
     
