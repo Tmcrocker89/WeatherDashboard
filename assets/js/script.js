@@ -23,9 +23,18 @@ function getWeather(url)
     fetch(url)
         .then(function(responce)
         {
-            return responce.json();
+            console.log(responce)
+            if(responce.status !== 200)
+            {
+                $("#error").html("Error:Try another City, or check spelling")
+                $("#error").css("display","block")
+                throw Error(responce.statusText)
+            }
+            return responce.json();           
         })
+
         .then(function(data){
+            console.log(data)
             lat = data.coord.lat;
             lon = data.coord.lon;
             cityName = data.name;
@@ -43,9 +52,15 @@ function getWeather(url)
                 {
                     weather = responce;
                     console.log(weather)
+                    if(!pastSearches.searches.includes(city) && city.length > 0)
+                    {
+                    pastSearches.searches.push(city)
+                    }
+                    localStorage.setItem('cities', JSON.stringify(pastSearches))
                     createHTML()
                 })
             })
+
         
 }
 
@@ -126,12 +141,13 @@ function search()
     city = searchBox.val();
     url1 = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=b08eb93cc1596355f2ef187a75896064`;
     getWeather(url1);
-    if(!pastSearches.searches.includes(city) && city.length > 0)
-    {
-    pastSearches.searches.push(city)
-    }
-    localStorage.setItem('cities', JSON.stringify(pastSearches))
+    // if(!pastSearches.searches.includes(city) && city.length > 0)
+    // {
+    // pastSearches.searches.push(city)
+    // }
+    // localStorage.setItem('cities', JSON.stringify(pastSearches))
     searchBox.val('');
+    $("#error").css("display","none")
 }
 
 function clearSearch()
