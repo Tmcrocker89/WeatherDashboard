@@ -23,7 +23,6 @@ function getWeather(url)
     fetch(url)
         .then(function(responce)
         {
-            console.log(responce)
             if(responce.status !== 200)
             {
                 $("#error").html("Error:Try another City, or check spelling")
@@ -34,7 +33,6 @@ function getWeather(url)
         })
 
         .then(function(data){
-            console.log(data)
             lat = data.coord.lat;
             lon = data.coord.lon;
             cityName = data.name;
@@ -51,7 +49,6 @@ function getWeather(url)
                 .then(function(responce)
                 {
                     weather = responce;
-                    console.log(weather)
                     if(!pastSearches.searches.includes(city) && city.length > 0)
                     {
                     pastSearches.searches.push(city)
@@ -60,6 +57,10 @@ function getWeather(url)
                     createHTML()
                 })
             })
+        .catch(function(error)
+        {
+            console.error("Error:", error)
+        })
 
         
 }
