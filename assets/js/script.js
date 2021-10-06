@@ -13,16 +13,19 @@ let url2;
 let weather = {};
 let current = $("#current");
 let future = $("#future");
+//pulls data from local storage and converts it back to an object
 let pulledSearches = JSON.parse(localStorage.getItem("cities"));
+//checks to see if pulledSearches is null, if not sets it to pulledSearches, if its null sets it to a object with an array.
 let pastSearches = (pulledSearches !== null) ? pulledSearches : {searches:[]};
 
 
-
+//fetch to get weather data
 function getWeather(url)
 {
     fetch(url)
         .then(function(responce)
         {
+            //if not a 200 responce log the error
             if(responce.status !== 200)
             {
                 $("#error").html("Error:Try another City, or check spelling")
@@ -31,7 +34,7 @@ function getWeather(url)
             }
             return responce.json();           
         })
-
+        //pull the lat and lon from the first request and pass it to the url for the second fetch request
         .then(function(data){
             lat = data.coord.lat;
             lon = data.coord.lon;
@@ -64,7 +67,7 @@ function getWeather(url)
 
         
 }
-
+//builds the html for the current and future weather
 function createHTML()
 {
     current.html('');
@@ -103,7 +106,7 @@ function createHTML()
 
     
 }
-
+//renders the past searches on the page
 function renderSearches()
 {
     let days = "";
@@ -136,21 +139,17 @@ clearButton.click(function()
     {
         clearSearch()
     });
-
+//pulls the value from the search box and sets the city in the url and calls the fetch function
 function search()
 {
     city = searchBox.val();
     url1 = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=b08eb93cc1596355f2ef187a75896064`;
     getWeather(url1);
-    // if(!pastSearches.searches.includes(city) && city.length > 0)
-    // {
-    // pastSearches.searches.push(city)
-    // }
-    // localStorage.setItem('cities', JSON.stringify(pastSearches))
     searchBox.val('');
     $("#error").css("display","none")
 }
 
+//sets the local storage to a empty object to clear the searches
 function clearSearch()
 {
     localStorage.setItem('cities', JSON.stringify({searches:[]}))
